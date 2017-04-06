@@ -17,4 +17,5 @@ public class Constants {
     public static final int FPS_LIMIT = 60;
     
     public static final float SCALE = 5f;
+    public static final float GRAVITY = -9.81f;
 }

@@ -7,7 +7,9 @@ package com.worms.screen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.worms.controller.WorldController;
 import com.worms.main.Worms;
+import com.worms.renderer.WorldRenderer;
 import com.worms.util.Constants;
 
 /**
@@ -16,21 +18,25 @@ import com.worms.util.Constants;
  */
 public class GameScreen extends AbstractScreen{
     
+    private WorldController worldController;
+    private WorldRenderer worldRenderer;
+    
     public GameScreen(Worms game) {
         super(game);
+        
+        init();
+    }
+    
+    private void init(){
+        worldController = new WorldController(this);
+        worldRenderer = new WorldRenderer(worldController);
     }
     
     @Override
     public void render(float delta){
         super.render(delta);
         
-        drawShape();
+        worldRenderer.render(delta);
     }
 
-    private void drawShape() {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.circle(50 * Constants.SCALE, 50 * Constants.SCALE, 20 * Constants.SCALE);
-        shapeRenderer.setColor(Color.BLACK);
-        shapeRenderer.end();
-    }
 }
