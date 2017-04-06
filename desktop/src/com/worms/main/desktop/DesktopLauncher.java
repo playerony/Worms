@@ -11,8 +11,8 @@ public class DesktopLauncher {
         
         config.title = Constants.GAME_NAME;
         
-        config.width = Constants.SCREEN_WIDTH;
-        config.height = Constants.SCREEN_HEIGHT;
+        config.width = (int) (Constants.SCREEN_WIDTH * Constants.SCALE);
+        config.height = (int) (Constants.SCREEN_HEIGHT * Constants.SCALE);
         config.backgroundFPS = Constants.FPS_LIMIT;
         config.foregroundFPS = Constants.FPS_LIMIT;
         

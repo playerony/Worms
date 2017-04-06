@@ -10,9 +10,11 @@ package com.worms.util;
  * @author pawel_000
  */
 public class Constants {
-    public static String GAME_NAME = "Worms world party";
+    public static final String GAME_NAME = "Worms world party";
     
-    public static int SCREEN_WIDTH = 700;
-    public static int SCREEN_HEIGHT = 480;
-    public static int FPS_LIMIT = 60;
+    public static final int SCREEN_WIDTH = 140;
+    public static final int SCREEN_HEIGHT = 96;
+    public static final int FPS_LIMIT = 60;
+    
+    public static final float SCALE = 5f;
 }

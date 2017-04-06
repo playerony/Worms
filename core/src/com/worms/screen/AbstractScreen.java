@@ -19,7 +19,7 @@ import com.worms.util.Constants;
  *
  * @author pawel_000
  */
-public class AbstractScreen implements Screen{
+public abstract class AbstractScreen implements Screen{
     public OrthographicCamera camera;
     public Worms game;
     
@@ -35,14 +35,14 @@ public class AbstractScreen implements Screen{
     private void init(){
         createCamera();
         
-        stage = new Stage(new StretchViewport(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, camera));
+        stage = new Stage(new StretchViewport(Constants.SCREEN_WIDTH * Constants.SCALE, Constants.SCREEN_HEIGHT * Constants.SCALE, camera));
         shapeRenderer = new ShapeRenderer();
         Gdx.input.setInputProcessor(stage);
     }
     
     private void createCamera() {
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        camera.setToOrtho(false, Constants.SCREEN_WIDTH * Constants.SCALE, Constants.SCREEN_HEIGHT * Constants.SCALE);
         camera.update();
     }
 
