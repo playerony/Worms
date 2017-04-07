@@ -5,12 +5,9 @@
  */
 package com.worms.screen;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.worms.controller.WorldController;
 import com.worms.main.Worms;
 import com.worms.renderer.WorldRenderer;
-import com.worms.util.Constants;
 
 /**
  *
