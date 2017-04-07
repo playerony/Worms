@@ -33,6 +33,8 @@ public class GameScreen extends AbstractScreen{
     public void render(float delta){
         super.render(delta);
         
+        worldController.update();
+        
         worldRenderer.render(delta);
     }
 

@@ -23,6 +23,8 @@ public class TerrainController {
     
     private TerrainGenerator terrainGenerator;
     
+    private ArrayList<Vector2> points;
+    
     public TerrainController(WorldController worldController){
         this.worldController = worldController;
         
@@ -31,6 +33,7 @@ public class TerrainController {
     
     private void init(){
         terrainGenerator = new TerrainGenerator(new Vector2(0f, 20f), Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2, 5);
+        points = terrainGenerator.getPoints();
     }
     
     public void drawShape() {

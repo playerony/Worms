@@ -12,7 +12,7 @@ import com.worms.screen.GameScreen;
  * @author pawel_000
  */
 public class WorldController {
-    
+    private BombController bombController;
     private TerrainController terrainController;
     
     private GameScreen gameScreen;
@@ -25,6 +25,11 @@ public class WorldController {
     
     private void init(){
         terrainController = new TerrainController(this);
+        bombController = new BombController(this);
+    }
+    
+    public void update(){
+        bombController.update();
     }
 
     /**
@@ -41,6 +46,10 @@ public class WorldController {
 
     public TerrainController getTerrainController() {
         return terrainController;
+    }
+
+    public BombController getBombController() {
+        return bombController;
     }
     
     

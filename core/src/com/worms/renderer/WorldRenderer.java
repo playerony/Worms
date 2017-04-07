@@ -21,5 +21,6 @@ public class WorldRenderer {
     
     public void render(float delta){
         worldController.getTerrainController().drawShape();
+        worldController.getBombController().render(delta);
     }
 }
