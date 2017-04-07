@@ -20,7 +20,7 @@ public class WorldRenderer {
     }
     
     public void render(float delta){
-        worldController.getTerrainController().drawShape();
+        worldController.getTerrainController().render(delta);
         worldController.getBombController().render(delta);
     }
 }

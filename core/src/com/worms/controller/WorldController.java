@@ -29,6 +29,7 @@ public class WorldController {
     }
     
     public void update(){
+        terrainController.update();
         bombController.update();
     }
 

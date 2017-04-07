@@ -31,6 +31,10 @@ public abstract class AbstractObject{
      * 
      */
     
+    public Vector2 getPosition() {
+        return position;
+    }
+
     public float getWidth() {
         return width;
     }

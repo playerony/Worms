@@ -15,14 +15,12 @@ import com.worms.util.Constants;
  * @author pawel_000
  */
 public class Bomb extends AbstractObject{
-    private static final float width = 10f;
-    private static final float height = 10f;
-    private final float r = 2f;
+    private static final float r = 2f;
     
     private ShapeRenderer shapeRenderer;
     
     public Bomb(Vector2 position) {
-        super(position, width, height);
+        super(position, r, r);
         
         init();
     }
@@ -40,4 +38,18 @@ public class Bomb extends AbstractObject{
         shapeRenderer.circle(position.x, position.y, r * Constants.SCALE);
         shapeRenderer.end();
     }
+    
+    /**
+     * 
+     * Getters and setters
+     * 
+     * @return 
+     * 
+     */
+
+    public float getR() {
+        return r;
+    }
+    
+    
 }

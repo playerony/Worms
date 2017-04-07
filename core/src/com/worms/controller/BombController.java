@@ -21,6 +21,7 @@ public class BombController {
     private WorldController worldController;
     
     private ArrayList<Bomb> bombs;
+    private ArrayList<Bomb> bombsToRemove;
         
     public BombController(WorldController worldController){
         this.worldController = worldController;
@@ -29,6 +30,7 @@ public class BombController {
     }
 
     private void init() {
+        bombsToRemove = new ArrayList<Bomb>();
         bombs = new ArrayList<Bomb>();
     }
     
@@ -37,6 +39,11 @@ public class BombController {
         
         for(Bomb b : bombs)
             b.update();
+        
+        for(Bomb b : bombsToRemove)
+            bombs.remove(b);
+        
+        bombsToRemove.clear();
     }
     
     private void inputHandler(){
@@ -48,4 +55,22 @@ public class BombController {
         for(Bomb b : bombs)
             b.render(delta);
     }
+    
+    /**
+     * 
+     * Getters and setters
+     * 
+     * @return 
+     * 
+     */
+
+    public ArrayList<Bomb> getBombs() {
+        return bombs;
+    }
+
+    public ArrayList<Bomb> getBombsToRemove() {
+        return bombsToRemove;
+    }
+    
+    
 }
