@@ -11,13 +11,14 @@ import com.badlogic.gdx.math.Vector2;
  *
  * @author pawel_000
  */
-public abstract class AbstractObject extends Point{
+public abstract class AbstractObject{
+    protected Vector2 position;
+    
     protected float width;
     protected float height;
     
     public AbstractObject(Vector2 position, float width, float height){
-        super(position);
-        
+        this.position = position;
         this.width = width;
         this.height = height;
     }
