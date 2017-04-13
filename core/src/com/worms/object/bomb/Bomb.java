@@ -5,6 +5,7 @@
  */
 package com.worms.object.bomb;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.worms.object.AbstractObject;
@@ -16,6 +17,7 @@ import com.worms.util.Constants;
  */
 public class Bomb extends AbstractObject{
     private static final float r = 2f;
+    private final float EXPLOSION_RANGE = 10f;
     
     private ShapeRenderer shapeRenderer;
     
@@ -30,12 +32,12 @@ public class Bomb extends AbstractObject{
     }
     
     public void update(){
-        position.y += Constants.GRAVITY;
+        position.y += Constants.GRAVITY * Gdx.graphics.getDeltaTime();
     }
     
     public void render(float delta){
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.circle(position.x, position.y, r * Constants.SCALE);
+        shapeRenderer.circle(position.x * Constants.SCALE, position.y * Constants.SCALE, r * Constants.SCALE);
         shapeRenderer.end();
     }
     
@@ -51,5 +53,8 @@ public class Bomb extends AbstractObject{
         return r;
     }
     
+    public float getExplosionRange() {
+        return EXPLOSION_RANGE;
+    }
     
 }

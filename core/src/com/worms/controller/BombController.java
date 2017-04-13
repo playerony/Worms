@@ -6,8 +6,6 @@
 package com.worms.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.worms.object.bomb.Bomb;
 import com.worms.util.Constants;
@@ -48,7 +46,7 @@ public class BombController {
     
     private void inputHandler(){
         if (Gdx.input.justTouched())
-            bombs.add(new Bomb(new Vector2(Gdx.input.getX(), Math.abs(Gdx.input.getY() - Constants.SCREEN_HEIGHT * Constants.SCALE))));
+            bombs.add(new Bomb(new Vector2(Gdx.input.getX() / Constants.SCALE, Math.abs(Gdx.input.getY() - Constants.SCREEN_HEIGHT * Constants.SCALE) / Constants.SCALE)));
     }
     
     public void render(float delta){

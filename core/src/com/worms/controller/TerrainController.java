@@ -39,9 +39,76 @@ public class TerrainController {
     public void update(){
         for(Bomb b : worldController.getBombController().getBombs()){
             for(int i=1 ; i<points.size() ; i++){
-                if(isCollision(new Vector2(points.get(i - 1).x * Constants.SCALE, points.get(i - 1).y * Constants.SCALE), new Vector2(points.get(i).x * Constants.SCALE, points.get(i).y * Constants.SCALE), b)){
+                if(isCollision(new Vector2(points.get(i - 1).x, points.get(i - 1).y), new Vector2(points.get(i).x, points.get(i).y), b)){
+                    explosion(b);
                     worldController.getBombController().getBombsToRemove().add(b);
                 }
+            }
+        }
+        
+        for(int i=1 ; i<points.size() ; i++){
+            float x1 = points.get(i - 1).x;
+            float y1 = points.get(i - 1).y;
+            float x2 = points.get(i).x;
+            float y2 = points.get(i).y;
+            
+            float distance = (float) Math.sqrt(( x2 - x1 ) *( x2 - x1 ) +( y2 - y1 ) *( y2 - y1 ) );
+            
+            if(distance >= 2f){
+                points.add(i, new Vector2((x1 + x2) / 2, (y1 + y2) / 2));
+            }
+        }
+    }
+    
+    private void explosion(Bomb bomb){
+        int i=0;
+        Vector2 firstElement = new Vector2();
+        Vector2 endElement = new Vector2();
+        boolean isGood = false;
+        boolean lastGood = false;
+        
+        for(Vector2 v : points){
+            if(i > 0){
+                float distance = (float) Math.sqrt(( v.x - bomb.getPosition().x ) *( v.x  - bomb.getPosition().x ) +( v.y - bomb.getPosition().y ) *( v.y - bomb.getPosition().y ) );
+
+                if(distance <= bomb.getExplosionRange()){
+                    isGood = true;
+                }else{
+                    isGood = false;
+                }
+                
+                if(isGood && !lastGood)
+                    firstElement = v;
+                else if(!isGood && lastGood)
+                    endElement = v;
+            }
+            
+            lastGood = isGood;
+            i++;
+        }
+        
+        // Liczenie nowych Y
+        
+        boolean start = false;
+        int elements = points.indexOf(endElement) - points.indexOf(firstElement);
+        
+        float startAngle = (float) ((firstElement.x / bomb.getExplosionRange()) * 180f / Math.PI);
+        float endAngle = (float) ((endElement.x / bomb.getExplosionRange()) * 180f / Math.PI);
+        
+        float angle = startAngle;
+        float angleToAdd = (endAngle - startAngle) / elements;
+        
+        for(i=0 ; i<points.size() ; i++){
+            if(points.get(i) == firstElement)
+                start = true;
+            else if(points.get(i) == endElement){
+                start = false;
+                break;
+            }
+            
+            if(start){
+                angle += angleToAdd;
+                points.get(i).y = (float) (bomb.getExplosionRange() * -Math.sin(angle * Math.PI / 180F) + bomb.getPosition().y);
             }
         }
     }
@@ -73,13 +140,13 @@ public class TerrainController {
         float n = Math.abs(( x2 - x1 ) *( y1 - y0 ) -( x1 - x0 ) *( y2 - y1 ) );
         float d = (float) Math.sqrt(( x2 - x1 ) *( x2 - x1 ) +( y2 - y1 ) *( y2 - y1 ) );
         float dist = n / d;
-        if( dist > bomb.getR() * Constants.SCALE ) return false;
+        if( dist > bomb.getR() ) return false;
 
         float d1 = (float) Math.sqrt(( x0 - x1 ) *( x0 - x1 ) +( y0 - y1 ) *( y0 - y1 ) );
-        if(( d1 - bomb.getR() * Constants.SCALE ) > d ) return false;
+        if(( d1 - bomb.getR() ) > d ) return false;
 
         float d2 = (float) Math.sqrt(( x0 - x2 ) *( x0 - x2 ) +( y0 - y2 ) *( y0 - y2 ) );
-        if(( d2 - bomb.getR() * Constants.SCALE ) > d ) return false;
+        if(( d2 - bomb.getR() ) > d ) return false;
 
         return true;
     }
