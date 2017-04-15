@@ -8,7 +8,6 @@ package com.worms.generator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
@@ -61,8 +60,13 @@ public class TerrainGenerator {
             i++;
         }
         
-        for(int j=2 ; j<20 ; j++)
-            for(i=1 ; i<points.size() - 1 ; i+=j)
+        for(int j=0 ; j<3 ; j++)
+            for(i=1 ; i<points.size() - 1 ; i+=2)
+                points.get(i).y = (points.get(i - 1).y + points.get(i + 1).y) / 2;
+        
+        // Smoothly terrain
+        for(int j=0 ; j<2 ; j++)
+            for(i=1 ; i<points.size() - 1 ; i++)
                 points.get(i).y = (points.get(i - 1).y + points.get(i + 1).y) / 2;
     }
 
