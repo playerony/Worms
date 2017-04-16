@@ -6,12 +6,12 @@
 package com.worms.controller;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.worms.generator.TerrainGenerator;
 import com.worms.object.bomb.Bomb;
+import com.worms.object.player.Player;
 import com.worms.util.Constants;
 import java.util.ArrayList;
 
@@ -31,6 +31,8 @@ public class TerrainController {
     private float vertices[];
     private int index = -1;
     
+    private Player player;
+    
     public TerrainController(WorldController worldController){
         this.worldController = worldController;
         
@@ -45,12 +47,20 @@ public class TerrainController {
         points = terrainGenerator.getPoints();
         
         updateVertices();
+        
+        initPlayer();
+    }
+    
+    private void initPlayer(){
+        player = new Player(new Vector2(50f, Constants.SCREEN_HEIGHT - 20), 5f, 5f);
+        player.setVertices(vertices);
     }
     
     public void update(){
         updatePoints();
         updateBombs();
         updateOtherThings();
+        player.update();
     }
     
     private void updatePoints(){
@@ -73,6 +83,7 @@ public class TerrainController {
             for(int i=1 ; i<points.size() ; i++){
                 if(isCollision(new Vector2(points.get(i - 1).x, points.get(i - 1).y), new Vector2(points.get(i).x, points.get(i).y), b)){
                     explosion(b);
+                    worldController.getExplodeController().initExplode(b.getPosition(), b.getExplosionRange(), MathUtils.random(20, 100));
                     worldController.getBombController().getBombsToRemove().add(b);
                     break;
                 }
@@ -193,6 +204,8 @@ public class TerrainController {
         worldController.getGameScreen().shapeRenderer.end();
         
         updateVertices();
+        
+        player.render(delta);
     }
     
     //.Checking circle - line collision
@@ -216,4 +229,18 @@ public class TerrainController {
 
         return true;
     }
+
+    /**
+     * 
+     * Getters and setters
+     * 
+     * @return 
+     * 
+     */
+    
+    public float[] getVertices() {
+        return vertices;
+    }
+    
+    
 }

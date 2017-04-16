@@ -5,6 +5,7 @@
  */
 package com.worms.object;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -17,10 +18,14 @@ public abstract class AbstractObject{
     protected float width;
     protected float height;
     
+    protected ShapeRenderer shapeRenderer;
+    
     public AbstractObject(Vector2 position, float width, float height){
         this.position = position;
         this.width = width;
         this.height = height;
+        
+        this.shapeRenderer = new ShapeRenderer();
     }
 
     /**
