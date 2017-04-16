@@ -21,13 +21,13 @@ import java.util.ArrayList;
  */
 public class TerrainController {
     private WorldController worldController;
-    
     private TerrainGenerator terrainGenerator;
     
     private ArrayList<Vector2> points;
     private ArrayList<Vector2> pointsToRemove;
     private ArrayList<Vector2> pointsToAdd;
     
+    private boolean toUpdate = true;
     private float vertices[];
     private int index = -1;
     
@@ -60,6 +60,7 @@ public class TerrainController {
         updatePoints();
         updateBombs();
         updateOtherThings();
+        updateVertices();
         player.update();
     }
     
@@ -83,8 +84,9 @@ public class TerrainController {
             for(int i=1 ; i<points.size() ; i++){
                 if(isCollision(new Vector2(points.get(i - 1).x, points.get(i - 1).y), new Vector2(points.get(i).x, points.get(i).y), b)){
                     explosion(b);
-                    worldController.getExplodeController().initExplode(b.getPosition(), b.getExplosionRange(), MathUtils.random(20, 100));
+                    worldController.getExplodeController().initExplode(b.getPosition(), b.getExplosionRange(), 10);
                     worldController.getBombController().getBombsToRemove().add(b);
+                    toUpdate = true;
                     break;
                 }
             }
@@ -106,10 +108,14 @@ public class TerrainController {
     }
     
     private void updateVertices(){
-         vertices = new float[terrainGenerator.getPoints().size() * 2 - 2];
-         for (int j=0 ; j<terrainGenerator.getPoints().size() - 1 ; j++){
-           vertices[j * 2] = terrainGenerator.getPoints().get(j).x * Constants.SCALE;
-           vertices[j * 2 + 1] = terrainGenerator.getPoints().get(j).y * Constants.SCALE;
+        if(toUpdate){
+            vertices = new float[terrainGenerator.getPoints().size() * 2 - 2];
+            for (int j=0 ; j<terrainGenerator.getPoints().size() - 1 ; j++){
+              vertices[j * 2] = terrainGenerator.getPoints().get(j).x * Constants.SCALE;
+              vertices[j * 2 + 1] = terrainGenerator.getPoints().get(j).y * Constants.SCALE;
+           }
+            
+            toUpdate = false;
         }
     }
     
@@ -190,8 +196,6 @@ public class TerrainController {
 
             index = points.indexOf(firstElement);
         }
-        
-        updateVertices();
     }
     
     public void render(float delta) {
@@ -202,8 +206,6 @@ public class TerrainController {
         worldController.getGameScreen().shapeRenderer.polyline(vertices);
         
         worldController.getGameScreen().shapeRenderer.end();
-        
-        updateVertices();
         
         player.render(delta);
     }

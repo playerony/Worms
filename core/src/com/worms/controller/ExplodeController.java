@@ -45,7 +45,7 @@ public class ExplodeController {
                 float distance = (float) Math.sqrt(( xRand - position.x ) *( xRand  - position.x ) +( yRand - position.y ) *( yRand - position.y ) );
                 
                 if(distance <= range)
-                    points.add(new Element(new Vector2(xRand, yRand), 1f, xVel, yVel));
+                    points.add(new Element(new Vector2(xRand, yRand), 4f, xVel, yVel));
             }
         }
     }
